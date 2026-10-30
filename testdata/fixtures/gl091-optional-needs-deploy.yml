@@ -1,0 +1,17 @@
+stages: [test, deploy]
+
+secret_detection:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - ./scan-secrets.sh
+
+deploy_prod:
+  stage: deploy
+  environment: production
+  needs:
+    - job: secret_detection
+      optional: true
+  script:
+    - ./deploy.sh
